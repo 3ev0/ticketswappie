@@ -68,7 +68,17 @@ def get_chrome_driver() -> WebDriver:
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Remote(f"http://{config['SELENIUM_HOST']}/wd/hub", options=chrome_options)
+    for i in range(10):
+        try:
+            logging.info(f"Connecting to selenium Chrome instance @{config['SELENIUM_HOST']}...")
+            driver = webdriver.Remote(f"http://{config['SELENIUM_HOST']}/wd/hub", options=chrome_options)
+        except Exception as err:
+            logging.error(f"Error connecting to Selenium driver: {err}")
+            logging.error("Retrying in 3 seconds..")
+            time.sleep(3)
+            continue
+        break
+    logging.info("Connection established.")
     return driver
 
 
