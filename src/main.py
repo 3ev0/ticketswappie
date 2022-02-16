@@ -148,10 +148,10 @@ if __name__ == "__main__":
     swappie = Swappie(config["TG_TICKET_BOT_TOKEN"])
     tickets_seen = []
     try:
-        ticket_sources = load_ticket_sources(config["TICKET_SOURCE_URLS_URI"])
         while True:
             tickets = []
             logging.info("Routine start.")
+            ticket_sources = load_ticket_sources(config["TICKET_SOURCE_URLS_URI"])
             for ticket_source in [ts for ts in ticket_sources if ts["service"] == "ticketswap"]:
                 tickets += swappie.get_ticketswap_available_tickets(ticket_source)
             new_tickets = [t for t in tickets if t not in tickets_seen]
