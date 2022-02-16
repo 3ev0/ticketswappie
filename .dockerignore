@@ -1,0 +1,6 @@
+*.env
+*.txt
+!requirements.txt
+*.json
+Dockerfile
+docker-compose.yaml
